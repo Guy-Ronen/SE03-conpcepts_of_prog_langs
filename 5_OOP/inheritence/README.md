@@ -6,11 +6,14 @@ There are several types of inheritance, including single inheritance, multiple i
 Single inheritance is the most basic type of inheritance, where a new class is derived from a single existing class. The new class inherits all the properties and methods of the existing class, and can also add new properties and methods of its own.
 
 ```java
+
+// Define a class 'Vehicle'
 class Vehicle {
   public void drive() {
     System.out.println("Driving a vehicle");
   }
 }
+// Define a class 'Car' that inherits from 'Vehicle'
 
 class Car extends Vehicle {
   public void accelerate() {
