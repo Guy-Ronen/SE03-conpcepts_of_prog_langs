@@ -11,7 +11,7 @@ Local scope refers to variables, functions, and other identifiers that are defin
 ```python
 def my_function():
     local_variable = "local_variable"
-    print(F"{local_variable} is a local variable") # local_variable is a local variable
+    print(F"{local_variable} is a local variable")
 
 my_function() # local_variable is a local variable
 print(local_variable) # error
@@ -26,7 +26,7 @@ print(local_variable) # error
 ```python
 global_variable = "global_varible"
 def my_function():
-    print(f"{global_variable} is a Global variable") # global_varible is a Global variable
+    print(f"{global_variable} is a Global variable")
 
 my_function() # global_varible is a Global variable
 print(global_variable) # global_varible

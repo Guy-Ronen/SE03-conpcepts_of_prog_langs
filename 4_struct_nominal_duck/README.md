@@ -1,3 +1,7 @@
+## Structural, Nominal and Duck Typing
+
+### Structural typing
+
 Structural typing is a type system used in some programming languages, where type compatibility is based on the structure of the types rather than their explicit declaration. In other words, if two types have the same structure, they are considered compatible, even if they have different names.
 
 Several programming languages support structural typing, including:
@@ -6,7 +10,7 @@ Several programming languages support structural typing, including:
 - Go
 - OCaml
 
-### Example 1 - Customer and Person work (TypeScript)
+### Example 1 - Customer and Person work (TypeScript):
 
 ```typescript
 class Person {
@@ -21,7 +25,7 @@ const customer: Customer = new Person(); // works
 ```
 
 
-### Example 2 - Customer and Person dont work when adding fields (Typescript)
+### Example 2 - Customer and Person dont work when adding fields to customer:
 
 ```typescript
 class Person {
@@ -39,7 +43,7 @@ const customer: Customer = new Person(); // error
 
 
 
-### Example 3 - Person works with Customer (Typescript)
+### Example 3 - Person works with Customer when adding fields to customer:
 
 ```typescript
 class Person {
@@ -52,9 +56,10 @@ class Customer {
 }
 
 const person: Person = new Customer(); // works
+const customer: Customer = new Person(); // error - Property 'age' is missing in type 'Person' but required in type 'Customer'.
 ```
 
-### Example 4- Real-life in Typescript
+### Real-life example - creating a user with ID and Email:
 
 ```typescript
 type ID = string;
@@ -82,11 +87,18 @@ const RegularUser = createUser(newID, newEmail); // works
 const swappedUser = createUser(newEmail, newID); // works
 
 ```
+In this example, we can see that the function `createUser` works with both `ID` and `Email` types, even though they are just aliases for `string` type.
+
 
 ## Nominal typing
-Nominal typing is a type system used in programming languages, where type compatibility is based on the name or label of the type rather than its structure. In other words, two types are considered compatible only if they have the same name or label, even if their structures or contents are different.
 
-In nominal typing, types are usually explicitly declared through class or struct definitions, and their names are used to determine their compatibility. For example, in Java, two objects are only considered to be of the same type if they are instances of the same class or interface, even if their instance variables have the same type and values.
+Nominal typing is a type system used in programming languages, where type compatibility is based on the name or label of the type rather than its structure. 
+
+In other words, two types are considered compatible only if they have the same name or label, even if their structures or contents are different.
+
+In nominal typing, types are usually explicitly declared through class or struct definitions, and their names are used to determine their compatibility. 
+
+For example, in Java, two objects are only considered to be of the same type if they are instances of the same class or interface, even if their instance variables have the same type and values.
 
 Here are some programming languages that use nominal typing:
 
@@ -96,8 +108,22 @@ Here are some programming languages that use nominal typing:
 - Kotlin
 - Rust
 
+#### Example 1 - Customer and Person dont work (Java):
 
-#### Example 4 (real-life) - Nominal typing in Rust
+```java
+class Person {
+    String name;
+}
+
+class Customer {
+    String name;
+}
+
+Customer customer = new Person(); // error
+```
+
+
+#### Real-life example - creating a user with ID and Email (rust):
 
 ```rust
 struct ID = String;
@@ -108,6 +134,7 @@ struct User {
     email: Email
 }
 
+// function to create a user
 fn create_user(id: ID, email: Email) -> User {
     User {
         id,
@@ -116,12 +143,12 @@ fn create_user(id: ID, email: Email) -> User {
 }
 
 fn main() {
-    let new_id = String::from("123");
-    let new_email = String::from("test@gmail.com");
+    let id = String::from("123");
+    let email = String::from("test@gmail.com");
 
-    let regular_user = create_user(id: new_id, email: new_email); // works
+    let regular_user = create_user(id, email); // works
+    let swapped_user = create_user(email, id); // error - expected struct `ID`, found struct `Email`
 
-    let swapped_user = create_user(id: &new_email, email: &new_id); // error
 }
 ```
 
@@ -129,11 +156,19 @@ fn main() {
 
 ## Duck typing 
 
-Duck typing is a concept in programming that is related to, but not identical to, structural typing. In duck typing, an object's suitability for a particular use is determined by whether it has the necessary methods and properties, rather than by its actual type.
+Duck typing is a concept in programming that is related to, but not identical to, structural typing. 
+In duck typing, an object's suitability for a particular use is determined by whether it has the necessary methods and properties, rather than by its actual type.
 
-The name "duck typing" comes from the phrase "If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck". In other words, if an object behaves like the required object, then it can be treated as if it were that object.
+Languages that support duck typing are for example:
+- Python
+- Ruby
+- JavaScript
 
-Many dynamically-typed languages, such as Python and Ruby, use duck typing to some extent. Here's an example in Python:
+The name "duck typing" comes from the phrase `"If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck".`
+
+In other words, if an object behaves like the required object, then it can be treated as if it were that object.
+
+Here's an example in Python:
 
 ```python
 class Dog:
@@ -159,3 +194,13 @@ speak_now(dog) # prints "Woof!"
 speak_now(cat) # prints "Meow!"
 speak_now(human) # Throws an AttributeError because `Human` does not have a `speak()` method
 ```
+
+## What are the differences between structural typing and duck typing?
+
+The differences between structural typing and duck typing are subtle, but important:
+
+- Structural typing is a type system where type compatibility is based on the structure of the types rather than their explicit declaration. In other words, if two types have the same structure, they are considered compatible, even if they have different names.
+
+- Duck typing is a concept in programming that is related to, but not identical to, structural typing. In duck typing, an object's suitability for a particular use is determined by whether it has the necessary methods and properties, rather than by its actual type.
+
+For example, in Python, the `speak_now` function takes an object as an argument, and calls its `speak` method. If the object has a `speak` method, then it can be treated as if it were a `Dog` or a `Cat`, even if it is not actually an instance of either class.

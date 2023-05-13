@@ -1,10 +1,14 @@
 # Pure funcitons
-The concept of pure functions is a fundamental principle in functional programming. A pure function is a function that always returns the same output for a given input and does not have any side effects. This means that a pure function does not modify any data outside of its local scope, and it does not rely on any external state or mutable variables. Because of these properties, pure functions are predictable, testable, and composable.
+The concept of pure functions is a fundamental principle in functional programming. 
+A pure function is a function that always returns the same output for a given input and does not have any side effects. 
+
+This means that a pure function does not modify any data outside of its local scope, and it does not rely on any external state or mutable variables. Because of these properties, pure functions are predictable, testable, and composable.
 
 ## Some of the characteristics of pure functions are:
 1. `Deterministic:` A pure function always returns the same output for a given set of inputs, regardless of the context in which it is called. This makes the function predictable and easy to reason about.
 
-2. `No side effects:` A pure function does not modify any data outside of its local scope, and it does not rely on any external state or mutable variables. This means that it does not have any side effects, such as modifying global variables or performing input/output operations.
+2. `No side effects:` A pure function does not modify any data outside of its local scope, and it does not rely on any external state or mutable variables. 
+This means that it does not have any side effects, such as modifying global variables or performing input/output operations.
 
 3. `Referentially transparent:` A pure function is referentially transparent, which means that it can be replaced with its return value without affecting the behavior of the program. This property makes it easier to reason about the behavior of the program and to compose functions together.
 
@@ -25,6 +29,20 @@ add(1, 2) // 3
 In here we can see that the function always returns the same output for a given set of inputs, and it does not modify any data outside of its local scope. 
 
 Therefore, it is a pure function.
+
+An impure version of this function would be one that modifies a global variable or performs input/output operations:
+
+```scala
+var total = 0
+
+def add(x: Int, y: Int): Int = {
+  total = total + x + y
+  total
+} 
+
+add(1, 2) // 3 (total = 3)
+add(3, 4) // 10 (total = 10)
+```
 
 ## Real world example- Email validator
 
