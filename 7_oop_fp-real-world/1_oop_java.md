@@ -1,5 +1,7 @@
 # Real world example: Rest API in Java
+
 link to prod: https://demo.codility.com/public-link/assessment_demo-rest_api_java_scala_demo/
+
 ### Requirements
 You are required to write an API that will contain the following endpoint:
 
@@ -8,13 +10,13 @@ GET /users
 * endpoint should return status code 200 on a successful request;
 
 * endpoint should return the data taken from the mocked-up database using the provided helper repository's method `repository.findAll()`. 
-    - This function returns an array of user objects containing id (Integer), name (String) and role (String).
+    - This function returns an array of user objects containing `id` (Integer), `name` (String) and `role` (String).
 
-* endpoint should accept a query parameter name which contains a string;
+* endpoint should accept a query parameter `name` which contains a string;
 
-* when parameter name is provided, only users whose name property is equal to the name query parameter must be returned. 
+* when parameter `name` is provided, only users whose name property is equal to the `name` query parameter must be returned. 
 
-* If no users with the given name are found, an empty array must be returned.
+* If no users with the given `name` are found, an empty array must be returned.
 
 ### Code
 ```java
@@ -56,11 +58,11 @@ public class UserRestController {
     // Abstraction: the method is a helper method that abstracts away the details of how the users are retrieved from the User Repository
     private List<UserDto> getUsers(String name) {
 
-        List<UserDto> users = repository.findAll();
+        List<UserDto> users = repository.findAll(); //
 
         if (name != null) {
             return users.stream()
-                    .filter(dto -> dto.getName().equals(name))
+                    .filter(dto -> dto.getName().equals(name)) // encapsulation: the dto.getName() method is private. We cant access it directly.
                     .collect(toList());
         } else {
             return users;
