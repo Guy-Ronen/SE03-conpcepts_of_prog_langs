@@ -1,6 +1,8 @@
 ## Static Typing:
 
-Static typing requires that variable types be declared explicitly at compile time. This means that the compiler can check for type errors before the code is run, which can help catch bugs early on. Here are some popular programming languages that use static typing:
+Static typing requires that variable types be declared explicitly at compile time. This means that the compiler can check for type errors before the code is run, which can help catch bugs early on. 
+
+Here are some popular programming languages that use static typing:
 
 - C
 - C++
@@ -10,9 +12,9 @@ Static typing requires that variable types be declared explicitly at compile tim
 
 #### Pros:
 
-1. `Catching errors at compile time:` With static typing, the compiler can catch type errors before the code is run. This can help prevent errors from occurring in the first place. For example, 
+1. `Catching errors at compile time:` With static typing, the compiler can catch type errors before the code is run. This can help prevent errors from occurring in the first place. 
 
-In Java, we cannot assign a string to an integer variable:
+For example, in Java, we cannot assign a string to an integer variable:
 
 ```java
 int x = "hello"; // Error: incompatible types
@@ -65,7 +67,7 @@ let john: Person = {
 };
 ```
 
-3. `More rigid: `Static typing can make code more rigid and less flexible, since it requires that variables be declared with specific types. 
+3. `More rigid:` Static typing can make code more rigid and less flexible, since it requires that variables be declared with specific types. 
 For example, in Java:
 ```java
 int[] numbers = new int[10]; // Array size is fixed at 10
@@ -75,6 +77,7 @@ int[] numbers = new int[10]; // Array size is fixed at 10
 ## Dynamic Typing:
 
 Dynamic typing allows variables to have different types at different times during the program execution. This means that type checking is done at runtime, which can be slower but also more flexible. 
+
 Here are some popular programming languages that use dynamic typing:
 
 - JavaScript

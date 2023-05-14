@@ -17,7 +17,7 @@ This means that it does not have any side effects, such as modifying global vari
 5. `Testable:` Because a pure function always returns the same output for a given set of inputs, it is easy to write tests for it. You can simply call the function with different input values and compare the output to the expected value.
 
 
-Here is an example of a pure function that takes two numbers as input and returns their sum:
+Here is an example of a pure function that takes two numbers as input and returns their sum in Scala:
 
 ```scala
 def add(x: Int, y: Int): Int = x + y
@@ -27,10 +27,11 @@ add(1, 2) // 3
 ```
 
 In here we can see that the function always returns the same output for a given set of inputs, and it does not modify any data outside of its local scope. 
-
 Therefore, it is a pure function.
 
+<strong>
 An impure version of this function would be one that modifies a global variable or performs input/output operations:
+</strong>
 
 ```scala
 var total = 0
@@ -44,7 +45,7 @@ add(1, 2) // 3 (total = 3)
 add(3, 4) // 10 (total = 10)
 ```
 
-## Real world example- Email validator
+## Real world example- Email validator in Scala
 
 ```scala
 def isValidEmail(email: String): Boolean = {

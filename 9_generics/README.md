@@ -1,10 +1,14 @@
 # Generics
 
-Generics are a programming concept that allows types to be parameterized. They provide a way to write reusable code that can work with different types, without the need to duplicate code. 
+Generics are a programming concept that allows types to be parameterized, which means they can be replaced with other types.
+
+They provide a way to write reusable code that can work with different types, without the need to duplicate code. 
 
 ## Generic example with TypeScript
 
-Generics provide a way to write reusable code that can work with different types without duplicating it. They can be used in functions, classes, and interfaces, and provide compile-time type safety.
+Generics provide a way to write reusable code that can work with different types without duplicating it. 
+
+They can be used in functions, classes, and interfaces, and provide compile-time type safety.
 
 Here's an example of how generics can be used in an API response in TypeScript:
 
@@ -50,18 +54,23 @@ function getUsers(): ApiResponse<User[]> {
 }
 
 const userResponse = getUser();
-console.log(userResponse.data.name); // Output: John Doe
+console.log(userResponse.data); 
+// Output: { id: 123, name: 'John Doe', email: 'johndoe@example.com'}
 
 
 const usersResponse = getUsers();
 console.log(usersResponse.data); 
 /*
-Output: [ { id: 1, name: 'John Doe', email: 'johndoe@example.com' },
-        { id: 2, name: 'Jane Smith', email: 'janesmith@example' } ]
+
+Output: 
+[ { id: 1, name: 'John Doe', email: 'johndoe@example.com' },
+{ id: 2, name: 'Jane Smith', email: 'janesmith@example' } ]
+
 */
 ```
 
 In this example, the `ApiResponse` interface is defined using a generic type parameter `T`. 
+
 This allows the response data to be of any type, making the interface reusable for different types of API responses.
 
-The `getUser` and `getUsers` functions both return an `ApiResponse` with different data types (`User` and `User[]`), demonstrating the flexibility of the generic type parameter.
+The `getUser()` and `getUsers()` functions both return an `ApiResponse` with different data types (`User` and `User[]`), demonstrating the flexibility of the generic type parameter.

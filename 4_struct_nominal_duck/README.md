@@ -14,48 +14,50 @@ Several programming languages support structural typing, including:
 
 ```typescript
 class Person {
-    name: string;
+  name: string;
 }
 
 class Customer {
-    name: string;
+  name: string;
 }
 
 const customer: Customer = new Person(); // works
 ```
 
-
-### Example 2 - Customer and Person dont work when adding fields to customer:
+### Example 2 - Customer and Person don't work when adding fields to customer:
 
 ```typescript
 class Person {
-    name: string;
+  name: string;
 }
-
 
 class Customer {
-    name: string;
-    age: number;
+  name: string;
+  age: number;
 }
 
-const customer: Customer = new Person(); // error
+const customer: Customer = new Person(); // error - Property 'age' is missing in type 'Person' but required in type 'Customer'.
 ```
-
-
 
 ### Example 3 - Person works with Customer when adding fields to customer:
 
 ```typescript
 class Person {
-    name: string;
+  name: string;
 }
 
 class Customer {
-    name: string;
-    age: number;
+  name: string;
+  age: number;
 }
 
 const person: Person = new Customer(); // works
+
+person.name = "John"; // works
+person.age = 30; // works
+
+console.log(person); // Person { name: 'John', age: 30 }
+
 const customer: Customer = new Person(); // error - Property 'age' is missing in type 'Person' but required in type 'Customer'.
 ```
 
@@ -70,33 +72,33 @@ type User = {
   email: Email;
 };
 
-
-function createUser(id: ID, email: Email){
-    const user: User = {
-        id,
-        email
-    }
-    return user;
+function createUser(id: ID, email: Email) {
+  const user: User = {
+    id,
+    email,
+  };
+  return user;
 }
 
 const newID = "123";
 const newEmail = "test@gmail.com";
 
-const RegularUser = createUser(newID, newEmail); // works
+const regularUser = createUser(newID, newEmail); // works
+console.log(regularUser); // { id: '123', email: 'test@gmail' }
 
 const swappedUser = createUser(newEmail, newID); // works
-
+console.log(swappedUser); // { id: 'test@gmail', email: '123' }
 ```
-In this example, we can see that the function `createUser` works with both `ID` and `Email` types, even though they are just aliases for `string` type.
 
+In this example, we can see that the function `createUser` works with both `ID` and `Email` types, even though they are just aliases for `string` type.
 
 ## Nominal typing
 
-Nominal typing is a type system used in programming languages, where type compatibility is based on the name or label of the type rather than its structure. 
+Nominal typing is a type system used in programming languages, where type compatibility is based on the name or label of the type rather than its structure.
 
 In other words, two types are considered compatible only if they have the same name or label, even if their structures or contents are different.
 
-In nominal typing, types are usually explicitly declared through class or struct definitions, and their names are used to determine their compatibility. 
+In nominal typing, types are usually explicitly declared through class or struct definitions, and their names are used to determine their compatibility.
 
 For example, in Java, two objects are only considered to be of the same type if they are instances of the same class or interface, even if their instance variables have the same type and values.
 
@@ -119,47 +121,56 @@ class Customer {
     String name;
 }
 
-Customer customer = new Person(); // error
+Customer customer = new Person(); // error - incompatible types: Person cannot be converted to Customer
 ```
 
-
-#### Real-life example - creating a user with ID and Email (rust):
+#### Real-life example - creating a user with ID and Email (Rust):
 
 ```rust
-struct ID = String;
-struct Email = String;
 
-struct User {
-    id: ID,
-    email: Email
+// define ID and Email structs
+struct ID {
+    id: String,
 }
 
-// function to create a user
-fn create_user(id: ID, email: Email) -> User {
-    User {
-        id,
-        email
-    }
+struct Email {
+    email: String,
+}
+
+// define User struct that uses ID and Email structs as fields 
+struct User<'a> {
+    id: &'a ID,
+    email: &'a Email,
+}
+
+// define a function that creates a new user with ID and Email structs as parameters 
+fn create_user<'a>(id: &'a ID, email: &'a Email) -> User<'a> {
+    User { id, email }
 }
 
 fn main() {
-    let id = String::from("123");
-    let email = String::from("test@gmail.com");
+    let new_id = ID {
+        id: String::from("123"),
+    };
 
-    let regular_user = create_user(id, email); // works
-    let swapped_user = create_user(email, id); // error - expected struct `ID`, found struct `Email`
+    let new_email = Email {
+        email: String::from("test@gmail.com"),
+    };
 
+    create_user(&new_id, &new_email); // works
+
+    create_user(&new_email, &new_id); // error - expected struct `ID`, found struct `Email`
 }
 ```
 
+## Duck typing
 
+Duck typing is a concept in programming that is related to, but not identical to structural typing.
 
-## Duck typing 
-
-Duck typing is a concept in programming that is related to, but not identical to, structural typing. 
 In duck typing, an object's suitability for a particular use is determined by whether it has the necessary methods and properties, rather than by its actual type.
 
 Languages that support duck typing are for example:
+
 - Python
 - Ruby
 - JavaScript
@@ -197,10 +208,62 @@ speak_now(human) # Throws an AttributeError because `Human` does not have a `spe
 
 ## What are the differences between structural typing and duck typing?
 
-The differences between structural typing and duck typing are subtle, but important:
+- Structural typing is a static type system based on the structure of types, while duck typing is a dynamic typing concept based on behavior.
 
-- Structural typing is a type system where type compatibility is based on the structure of the types rather than their explicit declaration. In other words, if two types have the same structure, they are considered compatible, even if they have different names.
+- Structural typing relies on type compatibility through the structure of types, while duck typing focuses on the presence of required behavior.
 
-- Duck typing is a concept in programming that is related to, but not identical to, structural typing. In duck typing, an object's suitability for a particular use is determined by whether it has the necessary methods and properties, rather than by its actual type.
+- Structural typing is enforced at compile-time, while duck typing is typically enforced at runtime.
 
-For example, in Python, the `speak_now` function takes an object as an argument, and calls its `speak` method. If the object has a `speak` method, then it can be treated as if it were a `Dog` or a `Cat`, even if it is not actually an instance of either class.
+- Structural typing is more common in statically-typed languages, while duck typing is more common in dynamically-typed languages.
+
+
+Here is an example of how two classes cannot be structurally compatible, but can be duck-typed:
+
+```python 
+
+# Here is a human class with lots of methods 
+
+class Human:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def speak(self):
+        print(f"Hello, my name is {self.name} and I am {self.age} years old.")
+    
+
+    def walk(self):
+        print("I am walking.")
+    
+    def eat(self):
+        print("I am eating.")
+    
+    def sleep(self):
+        print("I am sleeping.")
+
+
+# Here is a duck class with only two methods
+
+class Duck:
+    def __init__(self, name):
+        self.name = name
+    
+    def speak(self):
+        print(f"Quack, my name is {self.name}.")
+    
+    def quack(self):
+        print("Quack, quack!")
+
+def speak_now(animal):
+    animal.speak()
+
+
+human = Human("John", 30)
+duck = Duck("Daffy")
+
+speak_now(human) # My name is John and I am 30 years old.
+
+speak_now(duck) # Quack, my name is Daffy.
+```
+
+As you can see, Human and Duck are NOT compatible types, because they have different structures, however they are both compatible with the speak_now function, because they both have a speak method (duck typing)

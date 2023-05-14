@@ -1,8 +1,11 @@
 # Inheritance
 
-Inheritance is a key concept in object-oriented programming that allows a new class to be based on an existing class, inheriting its properties and methods. This can help to reduce code duplication and increase code reuse, by allowing similar classes to share a common base implementation.
+Inheritance is a key concept in object-oriented programming that allows a new class to be based on an existing class, inheriting its properties and methods. 
+This can help to reduce code duplication and increase code reuse, by allowing similar classes to share a common base implementation.
 
-There are several types of inheritance, including single inheritance, multiple inheritance, and interface-based inheritance. Let's take a look at each of these in turn, with some examples in Java.
+<strong>
+There are several types of inheritance, including single inheritance, multiple inheritance, and interface-based inheritance. 
+</strong>
 
 ## Single Inheritance
 Single inheritance is the most basic type of inheritance, where a new class is derived from a single existing class. The new class inherits all the properties and methods of the existing class, and can also add new properties and methods of its own.
@@ -43,15 +46,15 @@ public class Main {
   }
 }
 ```
-In this example, we have a `Vehicle` class with a `drive()` method, and a `Car` class that inherits from `Vehicle` and adds a new `accelerate()` method, and a `Motorcycle` class that also inherits from `Vehicle` and adds a new `wheelie()` method.
 
-In the `main()` method, we create an instance of the `Car` class and call its `drive()` and `accelerate()` methods, and we also create an instance of the `Motorcycle` class and call its `drive()` and `wheelie()` methods.
+In this example, we have a `Vehicle` class with a `drive()` method, and a `Car` class that inherits from `Vehicle` and adds an `accelerate()` method. 
+
+We also have a `Motorcycle` class that inherits from `Vehicle` and adds a `wheelie()` method.
 
 ## Multiple Inheritance
 
-Multiple inheritance allows a new class to inherit from multiple existing classes, combining their properties and methods into a single class. This can be useful when we want to create a new class that has features from multiple existing classes.
-
-In this example, we have a `Vehicle` class with a `drive()` method, and a `Radio` class with a `play()` method. We then define a `Car` class that inherits from both `Vehicle` and `Radio`, combining their properties and methods into a single class.
+Multiple inheritance allows a new class to inherit from multiple existing classes, combining their properties and methods into a single class. 
+This can be useful when we want to create a new class that has features from multiple existing classes.
 
 ```python
 
@@ -86,6 +89,10 @@ my_car.play()  # Playing 102.5 radio station.
 
 ```
 
+In this example, we have a `Vehicle` class with a `drive()` method, and a `Radio` class with a `play()` method. 
+We then define a `Car` class that inherits from both `Vehicle` and `Radio`, combining their properties and methods into a single class.
+
+<strong> Note: </strong>
 One thing to consider is that multiple inheritance can cause problems with conflicts or ambiguities when different classes define conflicting properties or methods. 
 
 To avoid these issues, many programming languages (including Java) do not support multiple inheritance.

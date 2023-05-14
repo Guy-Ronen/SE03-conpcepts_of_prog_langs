@@ -18,7 +18,7 @@ GET /users
 
 * If no users with the given `name` are found, an empty array must be returned.
 
-### Code
+### Solution:
 ```java
 package com.example.rest;
 
@@ -62,7 +62,7 @@ public class UserRestController {
 
         if (name != null) {
             return users.stream()
-                    .filter(dto -> dto.getName().equals(name)) // encapsulation: the dto.getName() method is private. We cant access it directly.
+                    .filter(user -> user.getName().equals(name)) // encapsulation: the user.getName() method is private. We cant access it directly.
                     .collect(toList());
         } else {
             return users;
@@ -74,9 +74,15 @@ public class UserRestController {
 ### Explanation
 Here's how the Java code is utilizing OOP principles:
 
-1. Encapsulation: The `UserRestController` class and its methods are all declared public, allowing them to be accessed from other classes. The class has a constructor that takes a `UserRepository` object as its argument and initializes an instance variable with it. The instance variable is declared private to prevent direct access to it from other classes, encapsulating the internal state of the class.
+1. Encapsulation: The `UserRestController` class and its methods are all declared public, allowing them to be accessed from other classes. 
 
-2. Abstraction: The `UserRestController` class provides an abstraction of a RESTful API endpoint for interacting with user data. The create method returns a `ResponseEntity` object containing a list of `UserDto` objects. The getUsers method is a helper method that abstracts away the details of how the users are retrieved from the `UserRepository`.
+The class has a constructor that takes a `UserRepository` object as its argument and initializes an instance variable with it. 
+
+The instance variable is declared private to prevent direct access to it from other classes, encapsulating the internal state of the class.
+
+2. Abstraction: The `UserRestController` class provides an abstraction of a RESTful API endpoint for interacting with user data. 
+
+The `create()` method returns a `ResponseEntity` object containing a list of `UserDto` objects. The `getUsers()` method is a helper method that abstracts away the details of how the users are retrieved from the `UserRepository`.
 
 
 ### Advantages of OOP over FP

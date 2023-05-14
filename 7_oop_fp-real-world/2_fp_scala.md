@@ -6,7 +6,7 @@ link to prod: https://demo.codility.com/public-link/assessment_demo-rest_api_jav
 
 You are required to write an API endpoint that will contain the following things:
 
-GET /users
+`GET /users`
 
 - The endpoint should return the 200 status code on a successful request.
 
@@ -37,21 +37,19 @@ tJsonProtocol with SprayJsonSupport {
   val route: Route = (path("users") & get) {
 
     // Define a query parameter called "name" that is optional which means that it may or may not be present
-    parameter("name".optional)
-
-    // pipe means that the result of the getUsers function is passed to the next directive. In this case, the next directive is the map directive. (Higher order function)
-    (_.map (name => getUsers.filter
-      (
-      user => user.name == name // filter the list of users by name using a lambda expression (higher order function and anonymous function)
+    parameter("name".optional) { name =>
+    
+      // Using map to create a new list of users that match the name parameter if it is present. (Higher-order function)
+      (_.map { name =>
+        // Filter the list of users by name using a lambda expression (higher-order function and anonymous function)
+        getUsers.filter(user => user.name == name)
+      }
+      // If no "name" parameter is present, return the entire list of users
+      .getOrElse(getUsers)
+      // Pipe the resulting list of users into `complete()` to construct the HTTP response
+      .pipe(complete(_))
       )
-    ) // we are using map to create a new list of users that match the name parameter if it is present. (Higher order function)
-
-    // if no "name" parameter is present, return the entire list of users
-    .getOrElse(getUsers)
-
-    // pipe the resulting list of users into the `complete` directive to construct the HTTP response
-    .pipe(complete(_))
-    )
+    }
   }
 }
 ```
@@ -104,11 +102,16 @@ object RestApi extends Defaul()` method takes the result of the `getOrElse()` me
 In some cases, it's not possible to write purely functional code. For example:
 
 1. `Input/output:` When an application needs to read or write data to a file or a database, this is considered a side effect and is not a pure function.
-
 <br>
+
 2. `User interfaces:` Interacting with a user interface, such as a web page or a mobile app, is inherently stateful and can't be modeled purely with functions. 
-
-User input can't be predicted, so it's impossible to write a pure function that takes a user's input and produces a predictable output. In the code above, the `complete()` directive is not pure because it produces a side effect by sending an HTTP response to the client.
-
+  * User input can't be predicted, so it's impossible to write a pure function that takes a user's input and produces a predictable output. In the code above, the `complete()` directive is not pure because it produces a side effect by sending an HTTP response to the client.
 <br>
-3. `Concurrency:` Managing concurrency and parallelism can be challenging in functional programming, especially when working with mutable data structures. Locks and other concurrency constructs introduce side effects and can make code impure.
+
+3. `Time-dependent operations:` Functions that rely on the current time or perform time-related calculations, such as scheduling tasks, timeouts, or handling time-based events, are impure because their behavior can vary depending on when they are called.
+<br>
+
+4. `Randomness:` Functions that generate random numbers or make use of random sources are impure since the output is non-deterministic and can vary across different invocations.
+<br>
+
+5. `External services and resources:` Functions that interact with external services, such as sending emails, accessing hardware devices, or integrating with third-party APIs, typically involve side effects and impurity.
