@@ -1,14 +1,10 @@
 # Generics
 
-Generics are a programming concept that allows types to be parameterized, which means they can be replaced with other types.
+Generics are a programming concept that allows types to be parameterized, which means they can be replaced with other types. They provide a way to write reusable code that can work with different types, without the need to duplicate code. 
 
-They provide a way to write reusable code that can work with different types, without the need to duplicate code. 
+## Generics example with TypeScript
 
-## Generic example with TypeScript
-
-Generics provide a way to write reusable code that can work with different types without duplicating it. 
-
-They can be used in functions, classes, and interfaces, and provide compile-time type safety.
+Generics can be used in functions, classes, and interfaces, and provide compile-time type safety.
 
 Here's an example of how generics can be used in an API response in TypeScript:
 
@@ -60,12 +56,11 @@ console.log(userResponse.data);
 
 const usersResponse = getUsers();
 console.log(usersResponse.data); 
-/*
 
+/*
 Output: 
 [ { id: 1, name: 'John Doe', email: 'johndoe@example.com' },
 { id: 2, name: 'Jane Smith', email: 'janesmith@example' } ]
-
 */
 ```
 

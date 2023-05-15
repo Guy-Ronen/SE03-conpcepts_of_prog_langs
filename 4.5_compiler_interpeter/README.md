@@ -11,9 +11,7 @@ This machine code can then be run directly by the operating system on the target
 Examples of compiled languages include C, C++, Java, and Go.
 </strong>
 
-In compiled languages, the source code is first compiled into an executable file, which can then be executed on the target machine. 
-
-The compiler performs various optimizations on the code, which can result in faster execution times. 
+In compiled languages, the source code is first compiled into an executable file, which can then be executed on the target machine. The compiler performs various optimizations on the code, which can result in faster execution times. 
 
 Compiled languages are often used for developing system-level software, such as:
 

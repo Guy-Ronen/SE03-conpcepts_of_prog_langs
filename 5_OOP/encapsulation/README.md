@@ -7,13 +7,13 @@ In other words, encapsulation helps to enforce the idea of "data hiding", which 
 This helps to prevent accidental modification of the data, and allows the class to maintain its internal consistency and validity.
 
 # Example
-In this example, we have a Car class that has three private fields: make, model, and year.
+* In this example, we have a `Car` class that has three private fields: `make`, `model`, and `year`.
 
-We also have three getter methods for each field, and three setter methods for each field.
+* We also have three `getter` methods for each field, and three `setter` methods for each field.
 
-The getter methods allow us to access the values of the fields. 
+* The `getter` methods allow us to access the values of the fields. 
 
-The setter methods allow us to change the values of the fields.
+* The `setter` methods allow us to change the values of the fields.
 
 ### 1. Car class with private fields
 ![1](1_car_class_with_private_fields.png)

@@ -28,28 +28,17 @@ User(id: Int, name: String, role: String)
 ### Code
 
 ```scala
-tJsonProtocol with SprayJsonSupport {
+object RestApi extends DefaultJsonProtocol with SprayJsonSupport {
 
-  // Define a JSON format for the User case class
   implicit val userJsonFormat: RootJsonFormat[User] = jsonFormat3(User)
 
-  // Define a route for the "/users" endpoint that accepts GET requests
   val route: Route = (path("users") & get) {
-
-    // Define a query parameter called "name" that is optional which means that it may or may not be present
-    parameter("name".optional) { name =>
-    
-      // Using map to create a new list of users that match the name parameter if it is present. (Higher-order function)
-      (_.map { name =>
-        // Filter the list of users by name using a lambda expression (higher-order function and anonymous function)
-        getUsers.filter(user => user.name == name)
-      }
-      // If no "name" parameter is present, return the entire list of users
-      .getOrElse(getUsers)
-      // Pipe the resulting list of users into `complete()` to construct the HTTP response
-      .pipe(complete(_))
-      )
-    }
+    parameter("name".optional)
+    (_.map(name => getUsers // getUsers is a pure helper method that returns a list of User objects and map is a higher-order function
+    .filter(name => _.name == name)) // filter the list of users by name (lambda expression)
+    .getOrElse(getUsers) // if no name is provided, return all users (function composition)
+    .pipe(complete(_)) // complete the request with the list of users
+    )
   }
 }
 ```
@@ -57,44 +46,34 @@ tJsonProtocol with SprayJsonSupport {
 ### The code uses the following principles:
 
 1. `Immutability:` the `User` case class is immutable and its fields cannot be changed once created.
-<br>
+   <br>
 
 2. `Higher-order functions:` `complete() `and `pipe()` are both higher-order functions. They take other functions as input and return a function as output.
-In this case:
+   In this case:
 
    - `complete()` takes a response entity as input and returns a Route.
 
    - `pipe()` takes a value as input and applies a function to it, returning the result.
 
    - `map()` takes the list of users as input and applies a function to it, returning the result.
-<br>
+     <br>
 
-3. `Pure functions:` `getUsers()` is a pure function that takes no inputs and returns a list of `User` instances. 
-It does not modify any state outside of its own scope.
-<br>
+3. `Pure functions:` `getUsers()` is a pure function that takes no inputs and returns a list of `User` instances.
+   It does not modify any state outside of its own scope.
+   <br>
 
-4. `Functional composition: `the `map()` method is used to compose the `getOrElse()` method and the `filter()` method.  The `mappackage com.example
-
-import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import akka.http.scaladsl.server.Directives.{complete, _}
-import akka.http.scaladsl.server.Route
-import spray.json.{DefaultJsonProtocol, RootJsonFormat}
-import com.example.Domain.User
-import com.example.Database.getUsers
-import scala.util.chaining.scalaUtilChainingOps
-
-object RestApi extends Defaul()` method takes the result of the `getOrElse()` method and applies the `filter()` method to it, returning the result.
+4. `Functional composition: `the `map()` method is used to compose the `getOrElse()` method and the `filter()` method.
 <br>
 
 5. `Function chaining:` the `getOrElse()` method and `pipe()` function are chained together to create a concise one-liner that retrieves the correct list of users and completes the HTTP response with that list.
-<br>
+   <br>
 
 6. `Lambda expressions:` the `filter()` method is called with a lambda expression that filters the list of users by name.
 
 ### Advantages of FP over OOP
 
 1. `FP is easier to reason about:` FP is based on the concept of pure functions, which are deterministic and predictable. Pure functions don't have side effects, so they can be reasoned about in isolation. This makes it easier to understand and debug code.
-<br>
+   <br>
 2. `FP is easier to test:` Pure functions are easier to test because they don't have side effects. This makes it easier to write unit tests for pure functions.
 
 ### When code can't be purely functional?
@@ -102,16 +81,15 @@ object RestApi extends Defaul()` method takes the result of the `getOrElse()` me
 In some cases, it's not possible to write purely functional code. For example:
 
 1. `Input/output:` When an application needs to read or write data to a file or a database, this is considered a side effect and is not a pure function.
-<br>
+   <br>
 
-2. `User interfaces:` Interacting with a user interface, such as a web page or a mobile app, is inherently stateful and can't be modeled purely with functions. 
-  * User input can't be predicted, so it's impossible to write a pure function that takes a user's input and produces a predictable output. In the code above, the `complete()` directive is not pure because it produces a side effect by sending an HTTP response to the client.
-<br>
+2. `User interfaces:` Interacting with a user interface, such as a web page or a mobile app, is inherently stateful and can't be modeled purely with functions. In the code above, the `complete()` directive is not pure because it produces a side effect by sending an HTTP response to the client.
+  <br>
 
 3. `Time-dependent operations:` Functions that rely on the current time or perform time-related calculations, such as scheduling tasks, timeouts, or handling time-based events, are impure because their behavior can vary depending on when they are called.
-<br>
+   <br>
 
 4. `Randomness:` Functions that generate random numbers or make use of random sources are impure since the output is non-deterministic and can vary across different invocations.
-<br>
+   <br>
 
-5. `External services and resources:` Functions that interact with external services, such as sending emails, accessing hardware devices, or integrating with third-party APIs, typically involve side effects and impurity.
+5. `External services and resources (API's):` Functions that interact with external services, such as sending emails, accessing hardware devices, or integrating with third-party APIs, typically involve side effects and impurity.

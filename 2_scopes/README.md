@@ -34,3 +34,8 @@ def my_function():
 my_function() # global_varible is a Global variable
 print(global_variable) # global_varible
 ```
+
+#### When do we use global variables?
+
+- When we want to use the same variable in different functions
+- When we want to use the same variable in different files
