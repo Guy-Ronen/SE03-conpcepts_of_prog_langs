@@ -40,5 +40,4 @@ fn main() {
 
     immutable_variable = "this message has been changed"; // error
 }
-
-
+```
